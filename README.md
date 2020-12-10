@@ -1,5 +1,17 @@
 # **Git**
 
+## Indice
+1. [Configuración inicial](#configuración-inicial)
+2. [Creación y obtención de un repositorio Git](#creación-y-obtención-de-un-repositorio-git)
+3. [Guardado de cambios en el repositorio](#guardado-de-cambios-en-el-repositorio)
+4. [Histórico de confirmaciones](#histórico-de-confirmaciones)
+5. [Deshacer cosas](#deshacer-cosas)
+6. [Repositorios remotos](#repositorios-remotos)
+7. [Ramas](#ramas)
+8. [Ramas remotas](#ramas-remotas)
+9. [Etiquetas](#etiquetas)
+10. [Referencias](#referencias)
+
 ## Configuración inicial
 Git trae una herramienta llamada ***git config*** que te permite obtener y establecer variables de configuración, que controlan el aspecto y funcionamiento de Git.
 
