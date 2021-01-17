@@ -14,6 +14,8 @@
   - [Cambiar direcciones URL remotas de SSH a HTTPS](#cambiar-direcciones-url-remotas-de-ssh-a-https)
   - [Cambiar direcciones URL remotas de HTTPS a SSH](#cambiar-direcciones-url-remotas-de-https-a-ssh)
   - [Generar una llave GPG](#generar-una-llave-gpg)
+  - [Informarle a Git acerca de tu llave GPG](#informarle-a-git-acerca-de-tu-llave-gpg)
+  - [Asociar un correo electrónico con tu llave GPG](#asociar-un-correo-electrónico-con-tu-llave-gpg)
 11. [Referencias](#referencias)
 
 ## Configuración inicial
