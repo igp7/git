@@ -10,7 +10,11 @@
 7. [Ramas](#ramas)
 8. [Ramas remotas](#ramas-remotas)
 9. [Etiquetas](#etiquetas)
-10. [Referencias](#referencias)
+10. [Guiás](#guias)
+  - [Cambiar direcciones URL remotas de SSH a HTTPS](#cambiar-direcciones-url-remotas-de-ssh-a-https)
+  - [Cambiar direcciones URL remotas de HTTPS a SSH](#cambiar-direcciones-url-remotas-de-https-a-ssh)
+  - [Generar una llave GPG](#generar-una-llave-gpg)
+11. [Referencias](#referencias)
 
 ## Configuración inicial
 Git trae una herramienta llamada ***git config*** que te permite obtener y establecer variables de configuración, que controlan el aspecto y funcionamiento de Git.
@@ -46,6 +50,41 @@ Git trae una herramienta llamada ***git config*** que te permite obtener y estab
   ```sh
   $ git config --global color.ui auto
   ```
+
+### Conexión SSH
+#### Github
+##### Generar una nueva clave SSH
+1. Abre la Terminal.
+2. Pega el siguiente texto, que sustituye tu dirección de correo electrónico en GitHub.
+```sh
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+```
+Esto crea una nueva clave ssh usando el correo electrónico proporcionado como etiqueta.
+  > Generating public/private rsa key pair.
+
+3. Cuando se te indique "Ingresar un archivo donde guardar la clave", presiona Intro. Al hacerlo aceptas la ubicación predeterminada del archivo.
+    > Enter a file in which to save the key (/home/you/.ssh/id_rsa): [Press enter]
+
+4. Donde se indica, escribe una contraseña segura. Para obtener más información, consulta "[Trabajar con frases de contraseña de la clave SSH](https://docs.github.com/es/articles/working-with-ssh-key-passphrases)".
+    > Enter passphrase (empty for no passphrase): [Type a passphrase]
+
+    > Enter same passphrase again: [Type passphrase again]
+
+##### Agregar tu clave SSH al ssh-agent
+Antes de agregar una nueva clave SSH al ssh-agent para gestionar tus claves, debes haber comprobado las claves SSH existentes y generado una nueva clave SSH.
+
+1. Inicia el agente SSH en segundo plano.
+```sh
+eval "$(ssh-agent -s)"
+```
+2. Agrega tu llave privada SSH al ssh-agent. Si creaste tu llave con un nombre distinto, o si estás agregando una llave existente que tiene un nombre distinto, reemplaza id_rsa en el comando con el nombre de tu archivo de llave privada.
+```sh
+ssh-add ~/.ssh/id_rsa
+```
+3. [Agrega la clave SSH a tu cuenta de GitHub](https://docs.github.com/es/articles/adding-a-new-ssh-key-to-your-github-account)
+
+
+
 
 
 ## Creación y obtención de un repositorio Git
@@ -112,6 +151,10 @@ Puedes obtener un proyecto Git de dos maneras. La primera toma un proyecto o dir
   $ git commit -a -m "<texto del commit>"
   ```
 
+- **Commits verificados firmados con PGP:**
+  ```sh
+  $ git commit -S -m your commit message
+  ```
 - **Eliminar archivos:** Para eliminar un archivo de Git, debes eliminarlo de tus archivos bajo seguimiento (más concretamente, debes eliminarlo de tu área de preparación), y después confirmar.
   ```sh
   $ git rm <name archivo>
@@ -232,6 +275,25 @@ Los repositorios remotos son versiones de tu proyecto que se encuentran alojados
   $ git remote rm [nombre]
   ```
 
+- **Cambiar la URL de un remoto:** Para cambia una URL de un repositorio remoto existente.
+```sh
+$ git remote set-url [remoto existente] [nueva URL]
+```
+  - Un nombre de **remoto existente**. Por ejemplo, origin o upstream son dos de las opciones comunes.
+  - Una **nueva URL** para el remoto. Por ejemplo:
+    - Si estás actualizando para usar HTTPS, tu URL puede verse como:
+        ```
+        https://github.com/USERNAME/REPOSITORY.git
+        ```
+    - Si estás actualizando para usar SSH, tu URL puede verse como:
+        ```
+        git@github.com:USERNAME/REPOSITORY.git
+        ```
+- **Comprobar existencia de repositorio remoto:** Comprueba que el nombre del remoto es correcto.
+```sh
+$ git remote set-url sofake [URL repositorio remoto]
+```
+
 ## Ramas
 Una rama Git es simplemente un apuntador móvil apuntando a una de las confirmaciones. La rama por defecto de Git es la rama master. Con la primera confirmación de cambios que realicemos, se creará esta rama principal master apuntando a dicha confirmación. En cada confirmación de cambios que realicemos, la rama irá avanzando automáticamente. Y la rama master apuntará siempre a la última confirmación realizada.
 
@@ -351,6 +413,170 @@ Git tiene la habilidad de etiquetar (tag) puntos específicos en la historia com
   ```sh
   $ git push origin --tags
   ```
+
+## Guiás
+### Cambiar direcciones URL remotas de SSH a HTTPS
+1. Abre la Terminal.
+2. Cambiar el directorio de trabajo actual en tu proyecto local.
+3. Enumerar tus remotos existentes a fin de obtener el nombre de los remotos que deseas cambiar.
+```sh
+git remote -v
+```
+3. Cambiar tu URL remota de SSH a HTTPS con el comando git remote set-url.
+```sh
+git remote set-url origin https://github.com/USERNAME/REPOSITORY.git
+```
+4. Verificar que la URL remota ha cambiado.
+```sh
+git remote -v
+# Verify new remote URL
+> origin  https://github.com/USERNAME/REPOSITORY.git (fetch)
+> origin  https://github.com/USERNAME/REPOSITORY.git (push)
+```
+
+La próxima vez que ejecutes git, git pull o git push en el repositorio remoto, se te pedirá el nombre de usuario y la contraseña de GitHub.
+
+1. Si tienes habilitada la [autenticación de dos factores](https://docs.github.com/es/articles/securing-your-account-with-two-factor-authentication-2fa), debes [crear un token de acceso personal](https://docs.github.com/es/github/authenticating-to-github/creating-a-personal-access-token) para usar en lugar de tu contraseña de GitHub.
+2. Puedes [utilizar un ayudante de credenciales](https://docs.github.com/es/github/using-git/caching-your-github-credentials-in-git) para que Git recuerde tu nombre de usuario y contraseña cada vez que se comunique con GitHub.
+
+### Cambiar direcciones URL remotas de HTTPS a SSH
+1. Abre la Terminal.
+2. Cambiar el directorio de trabajo actual en tu proyecto local.
+3. Enumerar tus remotos existentes a fin de obtener el nombre de los remotos que deseas cambiar.
+```sh
+$ git remote -v
+> origin  https://github.com/USERNAME/REPOSITORY.git (fetch)
+> origin  https://github.com/USERNAME/REPOSITORY.git (push)
+```
+4. Cambiar tu URL remota de HTTPS a SSH con el comando git remote set-url.
+```sh
+$ git remote set-url origin git@github.com:USERNAME/REPOSITORY.git
+```
+5. Verificar que la URL remota ha cambiado.
+```sh
+$ git remote -v
+# Verify new remote URL
+> origin  git@github.com:USERNAME/REPOSITORY.git (fetch)
+> origin  git@github.com:USERNAME/REPOSITORY.git (push)
+```
+
+### Generar una llave GPG
+1. Descarga e instala las herramientas de la línea de comando GPG para tu sistema operativo. Generalmente recomendamos instalar la versión más reciente para tu sistema operativo.
+2. Abre la Terminal.
+3. Genera un par de la llave GPG. Ya que existen varias versiones de GPG, puede que necesites consultar la página man relevante para encontrar el comando adecuado para la generación de llaves. Tu llave debe utilizar RSA.
+  - Si estás usando una versión 2.1.17 o superior, copia el siguiente texto para generar un par de la llave GPG.
+    ```sh
+    $ gpg --full-generate-key
+    ```
+  - Si no estás usando la versión 2.1.17 ni una superior, el comando gpg --full-generate-key no funciona. Copia el siguiente texto y continúa con el paso 6.
+    ```sh
+    $ gpg --default-new-key-algo rsa4096 --gen-key
+    ```
+4. En el prompt, especifica la clase de llave que quieres, o presiona Enter para aceptar el RSA y DSA predeterminado.
+5. Ingresa el tamaño de la llave que deseas. Tu llave debe ser de al menos 4096 bits.
+6. Ingresa el periodo de validez que deberá tener la llave. Presiona Enter para especificar la selección predeterminada, indicando que la llave no expira.
+7. Verifica que tus selecciones sean correctas.
+8. Ingresa tu información de ID de usuario.
+  - **Nota:** Cuando se te pida que ingreses tu dirección de correo electrónico, asegúrate de ingresar la dirección de correo electrónico verificada para tu cuenta Github. Para mantener tu dirección de correo electrónico como privada, utiliza tus direcciones de tipo no-reply proporcionadas por GitHub. Para obtener más información, consulta "[Verificar tu dirección de correo electrónico](https://docs.github.com/es/articles/verifying-your-email-address)" y "[Establecer tu dirección de correo electrónico para confirmaciones](https://docs.github.com/es/articles/setting-your-commit-email-address)".
+9. Escribe una contraseña segura.
+10. Utiliza el comando `gpg --list-secret-keys --keyid-format LONG` para enumerar las llaves GPG para las cuales tienes tanto una llave pública como privada. Se requiere una llave privada para registrar confirmaciones o etiquetas.
+  ```sh
+  $ gpg --list-secret-keys --keyid-format LONG
+  ```
+  **Nota:** Algunas instalaciones GPG en Linux pueden requerir que uses gpg2 --list-keys --keyid-format LONG para visualizar una lista de tus llaves existentes en su lugar. En este caso también deberás configurar Git para que use gpg2 by running git config --global gpg.program gpg2.
+11. De la lista de llaves GPG, copia la ID de la llave GPG que quieres utilizar. En este ejemplo, el ID de la llave GPG es 3AA5C34371567BD2:
+```sh
+$ gpg --list-secret-keys --keyid-format LONG
+/Users/hubot/.gnupg/secring.gpg
+/------------------------------------
+sec   4096R/3AA5C34371567BD2 2016-03-10 [expires: 2017-03-10]
+uid                          Hubot
+ssb   4096R/42B317FD4BA89E7A 2016-03-10
+```
+12. Pega el siguiente texto sustituyendo el ID de la llave GPG que deseas usar. En este ejemplo, el ID de la llave GPG es 3AA5C34371567BD2:
+```sh
+$ gpg --armor --export 3AA5C34371567BD2
+# Prints the GPG key ID, in ASCII armor format
+```
+13. Copia tu llave GPG, comenzando con *-----BEGIN PGP PUBLIC KEY BLOCK-----* y terminando con *-----END PGP PUBLIC KEY BLOCK-----*.
+14. [Agrega la llave GPG a tu cuenta de GitHub](https://docs.github.com/es/articles/adding-a-new-gpg-key-to-your-github-account).
+
+### Informarle a Git acerca de tu llave GPG
+Si estás usando una llave GPG que coincide con la identidad de la persona que confirma el cambio y con tu dirección de correo electrónico verificada asociada a tu GitHub cuenta, puedes comenzar a firmar confirmaciones y firmar etiquetas.
+Si tienes múltiples llaves GPG, le debes decir a Git cuál utilizar.
+
+1. Abre la Terminal.
+
+2. Utiliza el comando gpg --list-secret-keys --keyid-format LONG para enumerar las llaves GPG para las cuales tienes tanto una llave pública como privada. Se requiere una llave privada para registrar confirmaciones o etiquetas.
+```sh
+$ gpg --list-secret-keys --keyid-format LONG
+```
+  **Nota:** Algunas instalaciones GPG en Linux pueden requerir que uses gpg2 --list-keys --keyid-format LONG para visualizar una lista de tus llaves existentes en su lugar. En este caso también deberás configurar Git para que use gpg2 by running git config --global gpg.program gpg2.
+
+3. De la lista de llaves GPG, copia la ID de la llave GPG que quieres utilizar. En este ejemplo, el ID de la llave GPG es 3AA5C34371567BD2:
+```sh
+  $ gpg --list-secret-keys --keyid-format LONG
+  /Users/hubot/.gnupg/secring.gpg
+  ------------------------------------
+  sec   4096R/3AA5C34371567BD2 2016-03-10 [expires: 2017-03-10]
+  uid                          Hubot
+  ssb   4096R/42B317FD4BA89E7A 2016-03-10
+```
+4. Para configurar tu llave de firma GPG en Git, pega el siguiente texto en sustitución de la ID de la llave GPG que quieras utilizar. En este ejemplo, el ID de la llave GPG es 3AA5C34371567BD2:
+```sh
+$ git config --global user.signingkey 3AA5C34371567BD2
+```
+5. Para agregar tu llave GPG a tu perfil bash, pega el texto que aparece a continuación:
+```sh
+    $ test -r ~/.bash_profile && echo 'export GPG_TTY=$(tty)' >> ~/.bash_profile
+    $ echo 'export GPG_TTY=$(tty)' >> ~/.profile
+```
+    **Nota:** Si no tienes .bash_profile, este comando agrega tu llave GPG al .profile.
+
+
+### Asociar un correo electrónico con tu llave GPG
+Tu llave GPG debe estar asociada con un correo electrónico verificado de GitHub que coincida con tu identidad de persona que confirma el cambio.
+
+1. Abre la Terminal.
+2. Utiliza el comando gpg --list-secret-keys --keyid-format LONG para enumerar las llaves GPG para las cuales tienes tanto una llave pública como privada. Se requiere una llave privada para registrar confirmaciones o etiquetas.
+```sh
+$ gpg --list-secret-keys --keyid-format LONG
+```
+    **Nota:** Algunas instalaciones GPG en Linux pueden requerir que uses gpg2 --list-keys --keyid-format LONG para visualizar una lista de tus llaves existentes en su lugar. En este caso también deberás configurar Git para que use gpg2 by running git config --global gpg.program gpg2.
+
+3. De la lista de llaves GPG, copia la ID de la llave GPG que quieres utilizar. En este ejemplo, el ID de la llave GPG es 3AA5C34371567BD2:
+```sh
+  $ gpg --list-secret-keys --keyid-format LONG
+  /Users/hubot/.gnupg/secring.gpg
+  ------------------------------------
+  sec   4096R/3AA5C34371567BD2 2016-03-10 [expires: 2017-03-10]
+  uid                          Hubot
+  ssb   4096R/42B317FD4BA89E7A 2016-03-10
+```
+4. Escribe gpg --edit-key GPG key ID, sustituyendo la ID de la llave GPG que te gustaría usar. En el siguiente ejemplo, el ID de llave GPG es 3AA5C34371567BD2:
+```sh
+$ gpg --edit-key 3AA5C34371567BD2
+```
+5. Escribe gpg> adduid para agregar los detalles de ID de usuario.
+```sh
+$ gpg> adduid
+```
+6. Sigue las indicaciones para suminsitrar tu nombre real, dirección de correo electrónica o cualquier comentario. Puedes modificar tus entradas al elegir N, C o E. Para mantener tu dirección de correo electrónico como privada, utiliza tus direcciones de tipo no-reply proporcionadas por GitHub. Para obtener más información, consulta "[Configurar la confirmación de tu dirección de correo electrónico.](https://docs.github.com/es/articles/setting-your-commit-email-address)"
+```
+  Real Name: Octocat
+    Email address: octocat@github.com
+    Comment: GitHub key
+    Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit?
+```
+7. Escribe O para guardar tus selecciones.
+8. Escribe la contraseña de tu llave.
+9. Escribe gpg --armor --export GPG key ID, sustituyendo la ID de la llave GPG que te gustaría usar. En el siguiente ejemplo, el ID de llave GPG es 3AA5C34371567BD2:
+```sh
+$ gpg --armor --export 3AA5C34371567BD2
+# Prints the GPG key, in ASCII armor format
+```
+10. Carga la llave GPG al [agregarla a tu cuenta GitHub](https://docs.github.com/es/articles/adding-a-new-gpg-key-to-your-github-account).
+
 
 ## Referencias
 - [Pro Git](https://git-scm.com/book/es/v2). Scott Chacon, Ben Straub. 2nd Edition (2014). Apress.
