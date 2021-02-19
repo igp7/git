@@ -580,6 +580,18 @@ $ gpg --armor --export 3AA5C34371567BD2
 10. Carga la llave GPG al [agregarla a tu cuenta GitHub](https://docs.github.com/es/articles/adding-a-new-gpg-key-to-your-github-account).
 
 
+### Eliminar clave GPG
+1. Para eliminar una clave GPG de GitHub, ve a https://github.com/settings/keys y en claves GPG, selecciona la que quieras y elimínala.
+2. Eliminar la clave GPG de la configuracion de Git:
+```sh
+git config --global --unset user.signingkey
+```
+3. Desactivar globalmente la clave de firma GPG para los commits
+```sh
+git config --global commit.gpgsign false
+```
+
+
 ## Referencias
 - [Pro Git](https://git-scm.com/book/es/v2). Scott Chacon, Ben Straub. 2nd Edition (2014). Apress.
 
