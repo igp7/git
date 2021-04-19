@@ -207,11 +207,11 @@ $ git log --all-match --author=<name autor> --grep="<texto a buscar en los commi
    Este comando utiliza lo que haya en tu área de preparación para la confirmación. Si no has hecho ningún cambio desde la última confirmación (por ejemplo, si ejecutas este comando justo después de tu confirmación anterior), esta instantánea será exactamente igual, y lo único que cambiarás será el mensaje de confirmación.
    Por ejemplo, si confirmas y luego te das cuenta de que se te olvidó preparar los cambios en uno de los archivos que querías añadir, puedes hacer algo así:
    ```sh
-  $ git commit -m 'initial commit'
-  $ git add forgotten_file
-  $ git commit --amend
+   $ git commit -m 'initial commit'
+   $ git add forgotten_file
+   $ git commit --amend
    ```
-  Estos tres comandos acabarán convirtiéndose en una única confirmación —la segunda confirmación reemplazará los resultados de la primera.
+  Estos tres comandos acabarán convirtiéndose en una única confirmación y la segunda confirmación reemplazará los resultados de la primera.
 
 - **Deshaciendo la preparación de un archivo:** Cuando quieres sacar un archivo del área de preparación.
   ```sh
