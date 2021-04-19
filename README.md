@@ -184,6 +184,10 @@ Después de haber hecho varias confirmaciones, o si has clonado un repositorio q
 ```sh
 $ git log
 ```
+Para poder ver los ficheros modificados en cada commit del histórico de confirmaciones:
+```sh
+$ git log --stat
+```
 Una de las opciones más útiles es -p, que muestra las diferencias introducidas en cada confirmación. También puedes usar la opción -2, que hace que se muestren únicamente las dos últimas entradas del histórico:
 ```sh
 $ git log -p -<número de ultimas entradas a mostrar>
@@ -211,7 +215,7 @@ $ git log --all-match --author=<name autor> --grep="<texto a buscar en los commi
    $ git add forgotten_file
    $ git commit --amend
    ```
-  Estos tres comandos acabarán convirtiéndose en una única confirmación y la segunda confirmación reemplazará los resultados de la primera.
+   Estos tres comandos acabarán convirtiéndose en una única confirmación y la segunda confirmación reemplazará los resultados de la primera.
 
 - **Deshaciendo la preparación de un archivo:** Cuando quieres sacar un archivo del área de preparación.
   ```sh
