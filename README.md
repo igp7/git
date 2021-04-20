@@ -1,4 +1,4 @@
-# **Git**
+# Git
 
 ## Indice
 1. [Configuración inicial](#configuración-inicial)
@@ -204,23 +204,51 @@ $ git log --all-match --author=<name autor> --grep="<texto a buscar en los commi
 ## Deshacer cosas
  Ésta es una de las pocas áreas de Git que pueden provocar que pierdas datos si haces las cosas incorrectamente.
 
- - **Modificar la última confirmación:** Si quieres volver a hacer la confirmación par añadir algún cambio en un archivo que se te ha olvidado, puedes usar:
-   ```sh
-   $ git commit --amend
-   ```
-   Este comando utiliza lo que haya en tu área de preparación para la confirmación. Si no has hecho ningún cambio desde la última confirmación (por ejemplo, si ejecutas este comando justo después de tu confirmación anterior), esta instantánea será exactamente igual, y lo único que cambiarás será el mensaje de confirmación.
-   Por ejemplo, si confirmas y luego te das cuenta de que se te olvidó preparar los cambios en uno de los archivos que querías añadir, puedes hacer algo así:
-   ```sh
-   $ git commit -m 'initial commit'
-   $ git add forgotten_file
-   $ git commit --amend
-   ```
-   Estos tres comandos acabarán convirtiéndose en una única confirmación y la segunda confirmación reemplazará los resultados de la primera.
+### Reset
+```sh
+$ git reset [mode] [commit]
+```
+Esta forma restablece la cabeza (HEAD) de rama actual a [commit] y posiblemente actualiza el índice (estableciéndolo al árbol de [commit]) y el área de trabajo dependiendo de [mode]. Si se omite [modo], el valor por defecto es *--mixed*. El [modo] debe ser uno de los siguientes:
+  - **Soft:** Elimina el commit y devuelve los ficheros confirmados en dicho commit a área de preparación.
+  ```sh
+  $ git reset --soft [commit]
+  ```
+  - **Mixed:** Elimina el commit y devuelve los ficheros confirmados en dicho commit a área de trabajo.
+  ```sh
+  $ git reset --mixed [commit]
+  ```
+  o
+  ```sh
+  $ git reset [commit]
+  ```
+  - **Hard:** Elimina el commit y los cambios realizados en los ficheros modificados del dicho commit desaparecen.
+  ```sh
+  $ git reset --hard [commit]
+  ```
+
+### Casos de uso
+- **Modificar la última confirmación:** Si quieres volver a hacer la confirmación par añadir algún cambio en un archivo que se te ha olvidado, puedes usar:
+```sh
+ $ git commit --amend
+ ```
+ Este comando utiliza lo que haya en tu área de preparación para la confirmación. Si no has hecho ningún cambio desde la última confirmación (por ejemplo, si ejecutas este comando justo después de tu confirmación anterior), esta instantánea será exactamente igual, y lo único que cambiarás será el mensaje de confirmación.
+ Por ejemplo, si confirmas y luego te das cuenta de que se te olvidó preparar los cambios en uno de los archivos que querías añadir, puedes hacer algo así:
+ ```sh
+ $ git commit -m 'initial commit'
+ $ git add forgotten_file
+ $ git commit --amend
+ ```
+Estos tres comandos acabarán convirtiéndose en una única confirmación y la segunda confirmación reemplazará los resultados de la primera.
 
 - **Deshaciendo la preparación de un archivo:** Cuando quieres sacar un archivo del área de preparación.
-  ```sh
-  $ git reset HEAD <archivo>
-  ```
+```sh
+$ git reset HEAD <archivo>
+```
+
+- **Resetear un fichero a su estado en e repositorio:** Cuando quieres resetear un fichero a su estado en el área de repositorio:
+```sh
+$ git checkout <fichero>
+```
 
 ## Repositorios remotos
 Los repositorios remotos son versiones de tu proyecto que se encuentran alojados en Internet o en algún punto de la red. Puedes tener varios, cada uno de los cuales puede ser de sólo lectura, o de lectura/escritura, según los permisos que tengas. Colaborar con otros implica gestionar estos repositorios remotos, y mandar (push) y recibir (pull) datos de ellos cuando necesites compartir cosas.
