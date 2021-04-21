@@ -10,15 +10,16 @@
 7. [Ramas](#ramas)
 8. [Ramas remotas](#ramas-remotas)
 9. [Etiquetas](#etiquetas)
-10. [Comandos Avanzados](#comandos-avanzados)
+10. [Submodulos](#submodulos)
+11. [Comandos Avanzados](#comandos-avanzados)
   - [Cherry-pick](#cherry-pick)
-11. [Guiás](#guias)
+12. [Guiás](#guias)
   - [Cambiar direcciones URL remotas de SSH a HTTPS](#cambiar-direcciones-url-remotas-de-ssh-a-https)
   - [Cambiar direcciones URL remotas de HTTPS a SSH](#cambiar-direcciones-url-remotas-de-https-a-ssh)
   - [Generar una llave GPG](#generar-una-llave-gpg)
   - [Informarle a Git acerca de tu llave GPG](#informarle-a-git-acerca-de-tu-llave-gpg)
   - [Asociar un correo electrónico con tu llave GPG](#asociar-un-correo-electrónico-con-tu-llave-gpg)
-12. [Referencias](#referencias)
+13. [Referencias](#referencias)
 
 ## Configuración inicial
 Git trae una herramienta llamada ***git config*** que te permite obtener y establecer variables de configuración, que controlan el aspecto y funcionamiento de Git.
@@ -460,6 +461,26 @@ Git tiene la habilidad de etiquetar (tag) puntos específicos en la historia com
   ```sh
   $ git push origin --tags
   ```
+
+## Submodulos
+Los submódulos permiten mantener un repositorio de Git como un subdirectorio de otro repositorio de Git. Esto permite clonar otro repositorio en un proyecto y mantener sus commits separados.
+- **Agregar nuevo submódulo:** Permite Agregar un repositorio de Git existente como un submódulo del repositorio en el que estamos trabajando. Para agregar un nuevo submódulo, se utiliza el comando *git submodule add* con la *URL* del proyecto que desea empezar a rastrear.
+```sh
+$ git submodule add [URL]
+```
+Por defecto, los submódulos agregarán el subproyecto a un directorio llamado igual que el repositorio y añadiran un nuevo archivo *.gitmodules*. Este es un archivo de configuración que almacena la asignación entre la URL del proyecto y el subdirectorio local en el que lo ha insertado:
+```
+[submodule "[name_submodule]"]
+	path = [directorio_submodule]
+	url = [URL]
+```
+Si tiene múltiples submódulos, tendrá múltiples entradas en este archivo. Es importante tener en cuenta que este archivo está controlado por la versión con sus otros archivos, como su archivo .gitignore.
+**Nota:** Puede sobrescribir el valor de la *URL* localmente usar `git config submodule.[name_submodule].url PRIVATE_URL` para su propio uso.
+
+- **Clonar un repositorio con submodulos:** Con *--recursive* en el comando *git clone*, se inicializará y actualizará automáticamente cada submódulo en el repositorio.
+```sh
+$ git clone --recursive [URL]
+```
 
 ## Comandos Avanzados
 ## Cherry-pick
