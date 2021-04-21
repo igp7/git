@@ -188,6 +188,10 @@ Para poder ver los ficheros modificados en cada commit del histórico de confirm
 ```sh
 $ git log --stat
 ```
+Visualizar el historial de forma minimalista:
+```sh
+$ git log --graph --oneline --decorate --all
+```
 Una de las opciones más útiles es -p, que muestra las diferencias introducidas en cada confirmación. También puedes usar la opción -2, que hace que se muestren únicamente las dos últimas entradas del histórico:
 ```sh
 $ git log -p -<número de ultimas entradas a mostrar>
@@ -226,7 +230,7 @@ Esta forma restablece la cabeza (HEAD) de rama actual a [commit] y posiblemente 
     $ git reset --hard [commit]
     ```
 
-### Casos de uso
+#### Casos de uso
 - **Modificar la última confirmación:** Si quieres volver a hacer la confirmación par añadir algún cambio en un archivo que se te ha olvidado, puedes usar:
   ```sh
    $ git commit --amend
@@ -249,6 +253,13 @@ Esta forma restablece la cabeza (HEAD) de rama actual a [commit] y posiblemente 
   ```sh
   $ git checkout <fichero>
   ```
+
+### Restore
+#### Casos de uso
+- **Eliminar uno ficheros de la zona *staged*:**
+```sh
+$ git restore --stage [fichero]
+```
 
 ## Repositorios remotos
 Los repositorios remotos son versiones de tu proyecto que se encuentran alojados en Internet o en algún punto de la red. Puedes tener varios, cada uno de los cuales puede ser de sólo lectura, o de lectura/escritura, según los permisos que tengas. Colaborar con otros implica gestionar estos repositorios remotos, y mandar (push) y recibir (pull) datos de ellos cuando necesites compartir cosas.
@@ -447,6 +458,19 @@ Git tiene la habilidad de etiquetar (tag) puntos específicos en la historia com
   ```sh
   $ git push origin --tags
   ```
+
+## Comandos Avanzados
+## Cherry-pick
+El comando *git cherry-pick* permite copiar **uno** o **varios** commints y pegarlos en otra rama. Para ello hay que posicionarse en la rama a la que se quiere traer el o los commits.
+```sh
+$ git checkout [rama]
+$ git cherry-pick [commit/s]
+```
+Opciones:
+- **-n:** Permite traer los cambios realizados en el commits o commits selecionados y deja esos cambios en el area de preparacion, sin crear un nuevo commit o commits.
+```sh
+$ git cherry-pick -n [commit] [commit]
+```
 
 ## Guiás
 ### Cambiar direcciones URL remotas de SSH a HTTPS
