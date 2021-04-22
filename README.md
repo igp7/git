@@ -545,7 +545,15 @@ $ git bisect run test-error.sh
 Esto ejecuta automáticamente test-error.sh en cada “commit” de “check-out” hasta que Git encuentre el primer “commit” roto. También se puede ejecutar algo como make o `make tests` o lo que sea que ejecute pruebas automatizadas.
 
 ## Blame
-
+Con `git blame` se muestra qué commit fue el último en modificar cada línea de cualquier archivo y por quién.
+```sh
+$ git blame [archivo]
+```
+Ademas, con la opcion `-L` se puede limitar la salida con una linea inicial y una final:
+```sh
+$ git blame -L [linea_inicial],[linea_final] [archivo]
+```
+El primer campo que muestra la salida es el SHA-1 parcial del “commit” que modificó esa línea. Los siguientes dos campos son valores extraídos del “commit” - el nombre del autor y la fecha del commit - así se puede ver de manera sencilla quién modificó esa línea y cuándo. Tras estos viene el número de línea y el contenido del archivo.
 
 ## Guiás
 ### Cambiar direcciones URL remotas de SSH a HTTPS
