@@ -13,6 +13,9 @@
 10. [Submodulos](#submodulos)
 11. [Comandos Avanzados](#comandos-avanzados)
   - [Cherry-pick](#cherry-pick)
+  - [Stash](#stash)
+  - [Bisect](#bisect)
+  - [Blame](#blame)
 12. [Guiás](#guias)
   - [Cambiar direcciones URL remotas de SSH a HTTPS](#cambiar-direcciones-url-remotas-de-ssh-a-https)
   - [Cambiar direcciones URL remotas de HTTPS a SSH](#cambiar-direcciones-url-remotas-de-https-a-ssh)
@@ -87,10 +90,6 @@ eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_rsa
 ```
 3. [Agrega la clave SSH a tu cuenta de GitHub](https://docs.github.com/es/articles/adding-a-new-ssh-key-to-your-github-account)
-
-
-
-
 
 ## Creación y obtención de un repositorio Git
 Puedes obtener un proyecto Git de dos maneras. La primera toma un proyecto o directorio existente y lo importa en Git. La segunda clona un repositorio Git existente desde otro servidor.
@@ -206,6 +205,10 @@ $ git log --since=<2.weeks> o <"2008-10-01">
 También puedes filtrar la lista para que muestre sólo aquellas confirmaciones que cumplen ciertos criterios. La opción --author te permite filtrar por autor, y --grep te permite buscar palabras clave entre los mensajes de confirmación. (Ten en cuenta que si quieres aplicar ambas opciones simultáneamente, tienes que añadir --all-match, o el comando mostrará las confirmaciones que cumplan cualquiera de las dos, no necesariamente las dos a la vez.).
 ```sh
 $ git log --all-match --author=<name autor> --grep="<texto a buscar en los commit>"
+```
+Para visualizar información de un commit concreto se usa:
+```sh
+$ git show [commit]
 ```
 
 ## Deshacer cosas
@@ -522,6 +525,27 @@ Con *stash* se toma el estado actual del directorio de trabajo – que es, tus a
   ```sh
   $ git stash branch [rama]
   ```
+
+## Bisect
+El comando `bisect` hace una búsqueda binaria a través de su historial de commits para ayudarte a identificar lo más rápidamente posible qué commit introdujo un problema. Para comenzar la busqueda del commit que introdujo el error, primero hay que ejecuta `git bisect start` para para comenzar la busqueda, y luego usar `git bisect bad` para decirle al sistema que el “commit” actual está roto. Entonces, debes decir a `bisect` cuándo fue el último estado bueno conocido, usando `git bisect good [good_commit]`:
+```sh
+$ git bisect start
+$ git bisect bad [bad_commit] # Por ejemplo el commit HEAD
+$ git bisect good [good_commit]
+```
+A continuación git calcula el commit que se encuentra en la mitad entre el commit bad y el good, para que se pueda comprobar si en ese commit se encuentra el error que se busca. Si el error esta presente en el commit hay que introducir `git bisect bad` o `git bisect good` en caso de no estar presente el error. Este proceso se realizara hasta encontrar el primer commit en donde esta presente el error. Cuando haya terminado, se debe ejecutar `git bisect reset` para reiniciar el HEAD a donde estaba antes de comenzar, o terminará en un estado raro:
+```sh
+$ git bisect reset
+```
+**Nota:** Con un script que retornare 0 si el proyecto está bien u otro número si el proyecto está mal, se puede automatizar completamente `git bisect`. En primer lugar, se indica el alcance de la bisectriz, proporcionando los “commits” malos y buenos. Se puede hacer enumerándolos con el comando `bisect start`, listando primero el “commit” malo conocido y segundo el “commit” bueno conocido:
+```sh
+$ git bisect start [bad_commit] [good_commit]
+$ git bisect run test-error.sh
+```
+Esto ejecuta automáticamente test-error.sh en cada “commit” de “check-out” hasta que Git encuentre el primer “commit” roto. También se puede ejecutar algo como make o `make tests` o lo que sea que ejecute pruebas automatizadas.
+
+## Blame
+
 
 ## Guiás
 ### Cambiar direcciones URL remotas de SSH a HTTPS
