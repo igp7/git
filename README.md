@@ -16,6 +16,7 @@
   - [Stash](#stash)
   - [Bisect](#bisect)
   - [Blame](#blame)
+  - [Reflog](#reflog)
 12. [Guiás](#guias)
   - [Cambiar direcciones URL remotas de SSH a HTTPS](#cambiar-direcciones-url-remotas-de-ssh-a-https)
   - [Cambiar direcciones URL remotas de HTTPS a SSH](#cambiar-direcciones-url-remotas-de-https-a-ssh)
@@ -554,6 +555,35 @@ Ademas, con la opcion `-L` se puede limitar la salida con una linea inicial y un
 $ git blame -L [linea_inicial],[linea_final] [archivo]
 ```
 El primer campo que muestra la salida es el SHA-1 parcial del “commit” que modificó esa línea. Los siguientes dos campos son valores extraídos del “commit” - el nombre del autor y la fecha del commit - así se puede ver de manera sencilla quién modificó esa línea y cuándo. Tras estos viene el número de línea y el contenido del archivo.
+
+## Reflog
+Una de las cosas que Git hace en segundo plano, mientras estás trabajando, es mantener un “reflog” - un log de a dónde se apuntan las referencias del HEAD y la rama en los últimos meses.
+```sh
+$ git reflog
+
+# Ejemplo de salida
+734713b HEAD@{0}: commit: fixed refs handling, added gc auto, updated
+d921970 HEAD@{1}: merge phedders/rdocs: Merge made by recursive.
+1c002dd HEAD@{2}: commit: added some blame and merge stuff
+1c36188 HEAD@{3}: rebase -i (squash): updating HEAD
+95df984 HEAD@{4}: commit: # This is a combination of two commits.
+1c36188 HEAD@{5}: rebase -i (squash): updating HEAD
+7e05da5 HEAD@{6}: rebase -i (pick): updating HEAD
+```
+Cada vez que el HEAD de la rama es actualizada por cualquier razón, Git guarda esa información en este historial temporal. Y es así como se puede especificar commits antiguos con esta información. Si se quiere ver el quinto valor anterior a tu HEAD en el repositorio, se puede usar la referencia @{n} que se ve en la salida de reflog:
+```sh
+$ git show HEAD@{5}
+```
+También se puede utilizar esta sintaxis para ver dónde se encontraba una rama dada una cierta cantidad de tiempo. Por ejemplo, para ver dónde se encontraba la rama master ayer, se puede utilizar
+```sh
+$ git show master@{yesterday}
+```
+Esto muestra a dónde apuntaba tu rama el día de ayer. Esta técnica solo funciona para información que permanece en tu reflog, por lo que no se puede utilizar para ver commits que son anteriores a los que aparecen en él.
+
+**Nota:** Es importante notar que la información de reflog es estríctamente local, es un log de lo que se ha hecho en el repositorio local. Las referencias no serán las mismas en otra copia del repositorio; y justo después de que se ha inicializado el repositorio, se tendrá un reflog vacío, dado que no ha ocurrido ninguna actividad todavía en el mismo. Utilizar `git show HEAD@{2.months.ago}` funcionará solo si se clonó el proyecto hace al menos dos meses - si se clonó hace cinco minutos, no se obtendrán resultados.
+
+### Caso de uso
+Se ha realizado un `git reset --hard HEAD~3` y se han pedido algunos commits que no querías perder. Con `git reflog` se puede observar cual es la referencia previa del HEAD a dicho reset para volver a ese punto utilizando `git reset --hard HEAD@{[id_deseado]}`, así se volvería al estado anterior al primer `git reset`.
 
 ## Guiás
 ### Cambiar direcciones URL remotas de SSH a HTTPS
