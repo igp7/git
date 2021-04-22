@@ -495,6 +495,34 @@ Opciones:
 $ git cherry-pick -n [commit] [commit]
 ```
 
+## Stash
+Con *stash* se toma el estado actual del directorio de trabajo – que es, tus archivos controlados por la versión modificados y cambios almacenados – y lo guarda en una pila de cambios sin terminar que puedes volver a usar en cualquier momento.
+- **Crear un punto de guardado:** Permite crear el estado actual del directorio de trabajo.
+  ```sh
+  $ git stash
+  ```
+- **Visualizar puntos de guardado almacenados:** Para visualizar los puntos de guardados que forman la pila:
+  ```sh
+  $ git stash list
+  ```
+- **Retornar a estado guardado:** Existen dos formas de volver al estado del directorio de trabajo almacenado en en la pila de puntos de guardado:
+  - **apply:** Devuelve el punto de guardado almacenado sin eliminarlo de la pila de guardado.
+    ```sh
+    $ git stash apply stash@{[id]}
+    ```
+  - **pop:** Devuelve el punto de guardado almacenado y lo elimina de la pila de guardado.
+    ```sh
+    $ git stash pop stash@{[id]}
+    ```
+- **Eliminar punto de guardado:** Para eliminar un punto de guardado.
+  ```sh
+  $ git stash drop stash@{[id]}
+  ```
+- **Crear una rama desde un punto de guardado:** Crear una nueva rama desde un punto de guardado, verifica el “commit” en el que estaba cuando se realizo el guardado rápido, recrea el trabajo allí, y luego arroja el guardado rápido si la entrada se realiza con éxito.
+  ```sh
+  $ git stash branch [rama]
+  ```
+
 ## Guiás
 ### Cambiar direcciones URL remotas de SSH a HTTPS
 1. Abre la Terminal.
