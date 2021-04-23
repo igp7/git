@@ -485,6 +485,10 @@ Los submódulos permiten mantener un repositorio de Git como un subdirectorio de
   ```sh
   $ git clone --recursive [URL]
   ```
+- **Actualizar todos los submódulos:** Git permite buscar todos los submódulos y actualizar todos los submodulos automaticamente.
+  ```sh
+  git submodule update --remote [nombre_submodulo] # [nombre_submodulo] opcional
+  ```
 
 ## Comandos Avanzados
 ## Cherry-pick
