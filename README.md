@@ -109,6 +109,10 @@ Puedes obtener un proyecto Git de dos maneras. La primera toma un proyecto o dir
   ```sh
   $ git clone <url> <name-nuevo>
   ```
+  Para realizar un clone superficial con un historial truncado al número de confirmaciones especificado. Implica `--single-branch` a menos que se indique `--no-single-branch` para obtener los historiales cercanos a las puntas de todas las ramas. Si quiere clonar submódulos de forma superficial, pase también --shallow-submodules, **(Util para CI)**:
+  ```sh
+  $ git clone <url> --depth <depth>
+  ```
 
 ## Guardado de cambios en el repositorio
  Cada archivo de tu directorio de trabajo puede estar en uno de estos dos estados: bajo seguimiento (tracked), o sin seguimiento (untracked). Los archivos bajo seguimiento son aquellos que existían en la última instantánea; pueden estar sin modificaciones, modificados, o preparados. Los archivos sin seguimiento son todos los demás (cualquier archivo de tu directorio que no estuviese en tu última instantánea ni está en tu área de preparación). La primera vez que clonas un repositorio, todos tus archivos estarán bajo seguimiento y sin modificaciones, ya que los acabas de copiar y no has modificado nada.
