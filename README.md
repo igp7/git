@@ -771,7 +771,7 @@ git config --global commit.gpgsign false
 
 ### Añadir co-autores en commints en la linea de comandos
 1. Recopila el nombre y dirección de correo electrónico de cada co-autor. Si alguien elige mantener su dirección de correo electrónico como privada, debes utilizar su correo de no-reply proporcionado por GitHub para proteger su privacidad.
-2. En la siguiente línea del mensaje de confirmación, escriba `Co-authored-by: name <name@example.com>` con información específica para cada coautor. Después de la información del co-autor, añada una comilla de cierre. Si está añadiendo varios co-autores, dé a cada co-autor su propia línea y `Co-authored-by:`.
+2. En la siguiente línea del mensaje de confirmación, escriba `Co-authored-by: name <name@example.com>` con información específica para cada coautor. Después de la información del co-autor, añada una comilla de cierre. Si está añadiendo varios co-autores, dé a cada co-autor su propia línea y `Co-authored-by:`. Consulta [Creating a commit with multiple authors](https://docs.github.com/es/github/committing-changes-to-your-project/creating-a-commit-with-multiple-authors)
 ```
 $ git commit -m "Refactor usability tests.
 >
