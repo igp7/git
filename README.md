@@ -23,7 +23,7 @@
   - [Generar una llave GPG](#generar-una-llave-gpg)
   - [Informarle a Git acerca de tu llave GPG](#informarle-a-git-acerca-de-tu-llave-gpg)
   - [Asociar un correo electrónico con tu llave GPG](#asociar-un-correo-electrónico-con-tu-llave-gpg)
-  - [Añadir co-authored en commints en la linea de comandos](#añadir-co-authored-en-commints-en-la-linea-de-comandos)
+  - [Añadir co-autores en commints en la linea de comandos](#añadir-co-autores-en-commints-en-la-linea-de-comandos)
 - [Referencias](#referencias)
 
 ## Configuración inicial
