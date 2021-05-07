@@ -23,6 +23,7 @@
   - [Generar una llave GPG](#generar-una-llave-gpg)
   - [Informarle a Git acerca de tu llave GPG](#informarle-a-git-acerca-de-tu-llave-gpg)
   - [Asociar un correo electrónico con tu llave GPG](#asociar-un-correo-electrónico-con-tu-llave-gpg)
+  - [Añadir co-authored en commints en la linea de comandos](#Añadir-co-authored-en-commints-en-la-linea-de-comandos)
 - [Referencias](#referencias)
 
 ## Configuración inicial
@@ -768,6 +769,16 @@ git config --global --unset user.signingkey
 git config --global commit.gpgsign false
 ```
 
+### Añadir co-autores en commints en la linea de comandos
+1. Recopila el nombre y dirección de correo electrónico de cada co-autor. Si alguien elige mantener su dirección de correo electrónico como privada, debes utilizar su correo de no-reply proporcionado por GitHub para proteger su privacidad.
+2. En la siguiente línea del mensaje de confirmación, escriba `Co-authored-by: name <name@example.com>` con información específica para cada coautor. Después de la información del co-autor, añada una comilla de cierre. Si está añadiendo varios co-autores, dé a cada co-autor su propia línea y `Co-authored-by:`.
+```
+$ git commit -m "Refactor usability tests.
+>
+>
+Co-authored-by: name <name@example.com>
+Co-authored-by: another-name <another-name@example.com>"
+```
 
 ## Referencias
 - [Pro Git](https://git-scm.com/book/es/v2). Scott Chacon, Ben Straub. 2nd Edition (2014). Apress.
