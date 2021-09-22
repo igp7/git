@@ -267,6 +267,7 @@ Esta forma restablece la cabeza (HEAD) de rama actual a [commit] y posiblemente 
   ```
 
 ### Restore
+- `git restore` restablece el archivo a su contenido anterior, perdiendo los cambios que realizaras.
 #### Casos de uso
 - **Eliminar uno ficheros de la zona *staged*:**
 ```sh
