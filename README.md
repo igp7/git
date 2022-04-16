@@ -27,15 +27,45 @@
 - [Referencias](#referencias)
 
 ## Configuración inicial
-Git trae una herramienta llamada ***git config*** que te permite obtener y establecer variables de configuración, que controlan el aspecto y funcionamiento de Git.
+Git trae una herramienta llamada ***git config*** que te permite obtener y establecer variables de configuración, que controlan el aspecto y funcionamiento de Git. Existen tres contextos de configuración:
+- **--global:** Las configuraciones globales están disponibles para el usuario actual para todos los proyectos y se almacenan en `~/.gitconfig` o `~/.config/git/config`. Puedes hacer que git lea y escriba desde **Global** pasando la opción `--global`. Por ejemplo:
+  ```sh
+  # Create a global config
+  $ git config --global user.name "Global User"
+  ```
 
-- **Visualizar configuracion:** Si quieres comprobar tu configuración, listando todas las propiedades que Git ha configurado.
+- **--system:** Estas variables están disponibles para cada usuario del sistema y se almacenan en `[path]/etc/gitconfig`. Puedes hacer que git lea y escriba desde **System** pasando `--system` como opción. También requiere que tengas permisos de administración. Por ejemplo:
+  ```sh
+  # Create a system config
+  $ sudo git config --system user.name "System User"
+  ```
+
+- **--local:** Las configuraciones locales están disponibles sólo para el repositorio actual. Puede hacer que git lea y escriba desde Local pasando la opción `--local`. Por ejemplo:
+  ```sh
+  # Create a local specific config
+  $ git config --local user.name "Local User"
+  ```
+
+**Nota:** Si no se especifica ningún nivel, **local** es nivel por defecto . Además, es importante recordar que cada nivel anula los valores del nivel anterior. Prioridad:
+```sh
+Local > Global > Sistema
+```
+
+**Nota:** Cada uno de los contextos tiene su propio archivo de configuración. Los archivos de configuración de Git son de texto plano, por lo que también puedes ajustar manualmente los valores de configuración, editando directamente los archivos correspondientes y escribiendo en ellos con la sintaxis correspondiente; pero suele ser más sencillo hacerlo siempre a través del comando `git config`.
+
+
+- **Visualizar configuración:** Si quieres comprobar tu configuración, listando todas las propiedades que Git ha configurado.
   ```sh
   $ git config --list
   ```
   **Nota:** También puedes comprobar qué valor cree Git que tiene una clave específica ejecutando *git config {clave}*.
   ```sh
   $ git config user.name
+  ```
+
+- **Visualizar origen de configuración:** Si quieres comprobar tu configuración, listando todas las propiedades que Git ha configurado y en que nivel.
+  ```sh
+  git config --list --show-origin
   ```
 
 - **Identidad:** Para establecer tu nombre de usuario y dirección de correo electrónico en Git.
@@ -50,6 +80,15 @@ Git trae una herramienta llamada ***git config*** que te permite obtener y estab
   $ git config --global core.editor <name editor>
   ```
 
+- **Manejar finales de línea:** Establece el modo en que Git maneja los finales de línea y así evitar posibles errores entre distintos sistemas operativos por el modo que realizan los finales de linea. Toma un solo argumento.
+  ```sh
+  # En Linux y Mac
+  $ git config --global core.autocrlf input
+
+  # En Windows
+  $ git config --global core.autocrlf true
+  ```
+
 - **Herramienta de diferencias:** Para configurar es la herramienta de diferencias por defecto, usada para resolver conflictos de unión (merge).
   ```sh
   $ git config --global merge.tool <name herramienta>
@@ -60,6 +99,8 @@ Git trae una herramienta llamada ***git config*** que te permite obtener y estab
   ```sh
   $ git config --global color.ui auto
   ```
+
+**Nota:** Mas información sobre configuración de git [aquí](https://www.git-scm.com/book/es/v2/Personalizaci%C3%B3n-de-Git-Configuraci%C3%B3n-de-Git).
 
 ### Conexión SSH
 #### Github
