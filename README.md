@@ -24,6 +24,8 @@
   - [Informarle a Git acerca de tu llave GPG](#informarle-a-git-acerca-de-tu-llave-gpg)
   - [Asociar un correo electrónico con tu llave GPG](#asociar-un-correo-electrónico-con-tu-llave-gpg)
   - [Añadir co-autores en commints en la linea de comandos](#añadir-co-autores-en-commints-en-la-linea-de-comandos)
+- [Estrategias de Merge (Git Merge vs Rebase vs Squash)](#estrategias-de-merge-git-merge-vs-rebase-vs-squash)
+  - [Squash](#squash)
 - [Referencias](#referencias)
 
 ## Configuración inicial
@@ -821,6 +823,36 @@ $ git commit -m "Refactor usability tests.
 Co-authored-by: name <name@example.com>
 Co-authored-by: another-name <another-name@example.com>"
 ```
+
+## Estrategias de Merge (Git Merge vs Rebase vs Squash)
+### Squash
+Imagina que tu rama de características tiene un gran número de commits, por ejemplo, 100s commits. En lugar de fusionar todas los commits individualmente desde la rama feature_branch a la rama master, hay una opción para sumar todas las confirmaciones en una sola. Esto se llama "squash commit" porque "aplasta" todos los commits individuales en un gran cambio. En lo que respecta a la historia de la rama master, la historia de la rama de feature_branch se perdería.
+
+Podemos utilizar el siguiente comando para fusionar los commits de una rama con la rama master.
+```sh
+$ git merge --squash feature_branch
+```
+El diagrama muestra que tenemos 3 commits en la rama maestra. La rama feature que hemos creado tiene dos commits F1 y F2. Ahora tenemos que combinar todos los commits de la rama feature y de la rama master, como si sólo hubiera un commit en la rama master.
+```
+    Master - HEAD
+           ^
+           |
+C1---C2---C3    F1 + F2
+      \
+      F1---F2
+            ^
+            |
+      feature_branch
+```
+
+Después de la fusión de squash, la rama master se verá como se muestra a continuación. Una vez que la fusión de squash es exitosa, podemos eliminar la rama de feature_branch.
+```
+           Master - HEAD
+                  ^
+                  |
+C1---C2---C3---F1 + F2
+```
+
 
 ## Referencias
 - [Pro Git](https://git-scm.com/book/es/v2). Scott Chacon, Ben Straub. 2nd Edition (2014). Apress.
