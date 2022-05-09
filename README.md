@@ -350,6 +350,8 @@ Los repositorios remotos son versiones de tu proyecto que se encuentran alojados
   ```
   Por defecto, el comando git clone automáticamente configura tu rama local maestra para que siga la rama remota maestra del servidor del cual clonaste (asumiendo que  el repositorio remoto tiene una rama maestra). Al ejecutar git pull, por lo general se recupera la información del servidor del que clonaste, y automáticamente se intenta unir con el código con el que estás trabajando actualmente.
 
+  **Nota:** La diferencias entre `git fetch` y `git pull` es que `git fetch` solo trae la información del repositorio remoto sin llegar a fusionar los cambios en la rama local. Mientras `git pull` trae la información y la fusiona en la rama local.
+
 - **Envió a repositorios remotos:** Enviar el estado de tu repositorio a un repositorio remoto.
   ```sh
   $ git push [nombre-remoto] [nombre-rama]
