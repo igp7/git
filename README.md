@@ -419,6 +419,16 @@ Una rama Git es simplemente un apuntador móvil apuntando a una de las confirmac
   $ git branch -d [name-rama]
   ```
 
+- **Eliminar ramas de forma forzosa:** cuando la rama que estás borrando cumple alguna de las siguientes condiciones, si los commits de esa rama no están fusionados con la rama 'master' o si los commits en esa rama no son empujados a un repositorio remoto. Git no te permitirá borrar esa rama con la opcion -d.
+  ```sh
+  $ git branch -D [name-rama]
+  ```
+
+- **Recuperar una rama borrada:** Cuando eliminas una rama, Git muestra el SHA1 de esa rama. Haciendo uso de ese SH1 se puede restaurar la rama borrada.
+  ```sh
+  $ git checkout [name-rama] [SHA1-SUM]
+  ```
+
 - **Cambiar de rama:** Para cambiar entre ramas.
   ```sh
   $ git checkout [name-rama]
