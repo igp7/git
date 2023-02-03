@@ -526,8 +526,8 @@ Los submódulos permiten mantener un repositorio de Git como un subdirectorio de
   Por defecto, los submódulos agregarán el subproyecto a un directorio llamado igual que el repositorio y añadiran un nuevo archivo *.gitmodules*. Este es un archivo de configuración que almacena la asignación entre la URL del proyecto y el subdirectorio local en el que lo ha insertado:
   ```
   [submodule "[name_submodule]"]
-  	path = [directorio_submodule]
-  	url = [URL]
+     path = [directorio_submodule]
+     url = [URL]
   ```
   Si tiene múltiples submódulos, tendrá múltiples entradas en este archivo. Es importante tener en cuenta que este archivo está controlado por la versión con sus otros archivos, como su archivo .gitignore.
   **Nota:** Puede sobrescribir el valor de la *URL* localmente usar `git config submodule.[name_submodule].url PRIVATE_URL` para su propio uso.
