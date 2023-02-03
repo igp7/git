@@ -24,6 +24,7 @@
   - [Informarle a Git acerca de tu llave GPG](#informarle-a-git-acerca-de-tu-llave-gpg)
   - [Asociar un correo electrónico con tu llave GPG](#asociar-un-correo-electrónico-con-tu-llave-gpg)
   - [Añadir co-autores en commints en la linea de comandos](#añadir-co-autores-en-commints-en-la-linea-de-comandos)
+  - [Migrar repositorio](#migrar-repositorio)
 - [Estrategias de Merge (Git Merge vs Rebase vs Squash)](#estrategias-de-merge-git-merge-vs-rebase-vs-squash)
   - [Squash](#squash)
 - [Referencias](#referencias)
@@ -835,6 +836,31 @@ $ git commit -m "Refactor usability tests.
 Co-authored-by: name <name@example.com>
 Co-authored-by: another-name <another-name@example.com>"
 ```
+
+### Migrar repositorio
+Si quieres moverte de un servidor Git a otro como GitHub, GitLab, Bitbucket o cualquier otro servidor Git. Utiliza la opción `--mirror` para clonar tu repositorio Git con todo el historial, ramas y etiquetas en un directorio temporal:
+```sh
+$ git clone --mirror <OLD_REPO_URL> temp-dir
+```
+
+Vaya a ese directorio y cambie la antigua URL del repositorio por la nueva:
+```sh
+$ cd temp-dir
+$ git remote set-url origin <NEW_REPO_URL>
+```
+
+Ejecuta git push con la opción `--mirror` para mover tu repositorio Git con todo el historial, ramas y etiquetas a otro repositorio:
+```sh
+$ git push --mirror origin
+```
+
+El directorio temporal puede ser borrado ahora y el repositorio puede ser clonado desde el nuevo servidor remoto usando el comando `git clone` normal:
+```sh
+$ cd ..
+$ rm -rf temp-dir
+$ git clone <NEW_REPO_URL>
+```
+
 
 ## Estrategias de Merge (Git Merge vs Rebase vs Squash)
 ### Squash
