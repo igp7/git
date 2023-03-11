@@ -532,7 +532,7 @@ Git tiene la habilidad de etiquetar (tag) puntos específicos en la historia com
 Los submódulos permiten mantener un repositorio de Git como un subdirectorio de otro repositorio de Git. Esto permite clonar otro repositorio en un proyecto y mantener sus commits separados.
 - **Agregar nuevo submódulo:** Permite Agregar un repositorio de Git existente como un submódulo del repositorio en el que estamos trabajando. Para agregar un nuevo submódulo, se utiliza el comando *git submodule add* con la *URL* del proyecto que desea empezar a rastrear.
   ```sh
-  $ git submodule add [URL]
+  $ git submodule add [URL] [PATH]
   ```
   Por defecto, los submódulos agregarán el subproyecto a un directorio llamado igual que el repositorio y añadiran un nuevo archivo *.gitmodules*. Este es un archivo de configuración que almacena la asignación entre la URL del proyecto y el subdirectorio local en el que lo ha insertado:
   ```
@@ -541,6 +541,7 @@ Los submódulos permiten mantener un repositorio de Git como un subdirectorio de
      url = [URL]
   ```
   Si tiene múltiples submódulos, tendrá múltiples entradas en este archivo. Es importante tener en cuenta que este archivo está controlado por la versión con sus otros archivos, como su archivo .gitignore.
+  
   **Nota:** Puede sobrescribir el valor de la *URL* localmente usar `git config submodule.[name_submodule].url PRIVATE_URL` para su propio uso.
 
 - **Clonar un repositorio con submodulos:** Con *--recursive* en el comando *git clone*, se inicializará y actualizará automáticamente cada submódulo en el repositorio.
