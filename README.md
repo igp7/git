@@ -105,6 +105,12 @@ Local > Global > Sistema
 
 **Nota:** Mas información sobre configuración de git [aquí](https://www.git-scm.com/book/es/v2/Personalizaci%C3%B3n-de-Git-Configuraci%C3%B3n-de-Git).
 
+- **Visualizacion de caracteres "inusuales":** Para que git muestre correctamente caracteres que considera "inusuales", por ejemplo la ñ.
+  ```sh
+  # Activar para todos los repositorios
+  $ git config --global core.quotepath off
+  ```
+
 ### Conexión SSH
 #### Github
 ##### Generar una nueva clave SSH
