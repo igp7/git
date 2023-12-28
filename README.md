@@ -165,6 +165,11 @@ Puedes obtener un proyecto Git de dos maneras. La primera toma un proyecto o dir
   $ git clone <url> --depth <depth>
   ```
 
+- **Clonar un repositorio con submodulos:** Con *--recursive* en el comando *git clone*, se inicializará y actualizará automáticamente cada submódulo en el repositorio.
+  ```sh
+  $ git clone --recursive [URL]
+  ```
+
 ## Guardado de cambios en el repositorio
  Cada archivo de tu directorio de trabajo puede estar en uno de estos dos estados: bajo seguimiento (tracked), o sin seguimiento (untracked). Los archivos bajo seguimiento son aquellos que existían en la última instantánea; pueden estar sin modificaciones, modificados, o preparados. Los archivos sin seguimiento son todos los demás (cualquier archivo de tu directorio que no estuviese en tu última instantánea ni está en tu área de preparación). La primera vez que clonas un repositorio, todos tus archivos estarán bajo seguimiento y sin modificaciones, ya que los acabas de copiar y no has modificado nada.
 
@@ -560,7 +565,7 @@ Los submódulos permiten mantener un repositorio de Git como un subdirectorio de
   ```
 
 ## Comandos Avanzados
-## Cherry-pick
+### Cherry-pick
 El comando *git cherry-pick* permite copiar **uno** o **varios** commints y pegarlos en otra rama. Para ello hay que posicionarse en la rama a la que se quiere traer el o los commits.
 ```sh
 $ git checkout [rama]
@@ -572,7 +577,7 @@ Opciones:
 $ git cherry-pick -n [commit] [commit]
 ```
 
-## Stash
+### Stash
 Con *stash* se toma el estado actual del directorio de trabajo – que es, tus archivos controlados por la versión modificados y cambios almacenados – y lo guarda en una pila de cambios sin terminar que puedes volver a usar en cualquier momento.
 - **Crear un punto de guardado:** Permite crear el estado actual del directorio de trabajo.
   ```sh
@@ -600,7 +605,7 @@ Con *stash* se toma el estado actual del directorio de trabajo – que es, tus a
   $ git stash branch [rama]
   ```
 
-## Bisect
+### Bisect
 El comando `bisect` hace una búsqueda binaria a través de su historial de commits para ayudarte a identificar lo más rápidamente posible qué commit introdujo un problema. Para comenzar la busqueda del commit que introdujo el error, primero hay que ejecuta `git bisect start` para para comenzar la busqueda, y luego usar `git bisect bad` para decirle al sistema que el “commit” actual está roto. Entonces, debes decir a `bisect` cuándo fue el último estado bueno conocido, usando `git bisect good [good_commit]`:
 ```sh
 $ git bisect start
@@ -618,7 +623,7 @@ $ git bisect run test-error.sh
 ```
 Esto ejecuta automáticamente test-error.sh en cada “commit” de “check-out” hasta que Git encuentre el primer “commit” roto. También se puede ejecutar algo como make o `make tests` o lo que sea que ejecute pruebas automatizadas.
 
-## Blame
+### Blame
 Con `git blame` se muestra qué commit fue el último en modificar cada línea de cualquier archivo y por quién.
 ```sh
 $ git blame [archivo]
@@ -629,7 +634,7 @@ $ git blame -L [linea_inicial],[linea_final] [archivo]
 ```
 El primer campo que muestra la salida es el SHA-1 parcial del “commit” que modificó esa línea. Los siguientes dos campos son valores extraídos del “commit” - el nombre del autor y la fecha del commit - así se puede ver de manera sencilla quién modificó esa línea y cuándo. Tras estos viene el número de línea y el contenido del archivo.
 
-## Reflog
+### Reflog
 Una de las cosas que Git hace en segundo plano, mientras estás trabajando, es mantener un “reflog” - un log de a dónde se apuntan las referencias del HEAD y la rama en los últimos meses.
 ```sh
 $ git reflog
@@ -655,7 +660,7 @@ Esto muestra a dónde apuntaba tu rama el día de ayer. Esta técnica solo funci
 
 **Nota:** Es importante notar que la información de reflog es estríctamente local, es un log de lo que se ha hecho en el repositorio local. Las referencias no serán las mismas en otra copia del repositorio; y justo después de que se ha inicializado el repositorio, se tendrá un reflog vacío, dado que no ha ocurrido ninguna actividad todavía en el mismo. Utilizar `git show HEAD@{2.months.ago}` funcionará solo si se clonó el proyecto hace al menos dos meses - si se clonó hace cinco minutos, no se obtendrán resultados.
 
-### Caso de uso
+#### Caso de uso
 Se ha realizado un `git reset --hard HEAD~3` y se han pedido algunos commits que no querías perder. Con `git reflog` se puede observar cual es la referencia previa del HEAD a dicho reset para volver a ese punto utilizando `git reset --hard HEAD@{[id_deseado]}`, así se volvería al estado anterior al primer `git reset`.
 
 ## Guiás
