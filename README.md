@@ -25,6 +25,7 @@
   - [Asociar un correo electrónico con tu llave GPG](#asociar-un-correo-electrónico-con-tu-llave-gpg)
   - [Añadir co-autores en commints en la linea de comandos](#añadir-co-autores-en-commints-en-la-linea-de-comandos)
   - [Migrar repositorio](#migrar-repositorio)
+  - [Revisión de Pull Requests en local](#revisión-de-pull-requests-en-local)
 - [Estrategias de Merge (Git Merge vs Rebase vs Squash)](#estrategias-de-merge-git-merge-vs-rebase-vs-squash)
   - [Squash](#squash)
 - [Referencias](#referencias)
@@ -872,6 +873,44 @@ $ cd ..
 $ rm -rf temp-dir
 $ git clone <NEW_REPO_URL>
 ```
+
+### Revisión de Pull Requests en local
+### Revisión desde la rama origen del Pull Requests
+De esta forma se clona la rama origen desde la que se crea el Pull Requests. Este metodo permite visualizar en el Pull Requests los posibles commits añadidos a la rama mientras el Pull Requests permanece abierto. Pasos a seguir:
+
+1. Actualizar/Descargar rama de origen del Pull Requests a local:
+```sh
+git pull
+```
+
+2. Posicionarse en la rama del origen del Pull Requests:
+```sh
+git checkout -b <BRANCH_NAME> origin/<BRANCH_NAME>
+```
+
+En este punto se realizaría la revisión y si se añadieran nuevos commits realizar un `git push` para que se reflejen los nuevos commits en el Pull Requests.
+
+**Nota:** Tener cuidado de tener la rama siempre actualizada por si hay mas personas realizando cambios en la rama del Pull Requests.
+
+### Revisión desde una nueva rama a partir de Pull Requests
+De esta forma se creara una rama nueva en local a partir de la rama origen del Pull Requests. Los commit creados en la nueva rama no se mostraran en el Pull Requests, para añadir los posibles nuevos commits se tendra que crear un nuevo Pull Requests desde la nueva rama creada en local. Pasos a seguir: 
+
+1. Busca el número de la ID de la solicitud de extracción inactiva. Esta es la secuencia de dígitos inmediatamente después del título de la solicitud de extracción.
+	![](https://docs.github.com/assets/cb-49759/mw-1440/images/help/pull_requests/pull-request-id-number.webp)
+
+2. En la terminal
+	```sh
+	git fetch origin pull/<ID>/head:<BRANCH_NAME>
+	```
+	 - **ID**: ID (solo digitos) de la pull request.
+	 - **BRANCH_NAME**: Nombre a la nueva rama en local
+
+En este punto, se puede hacer lo que se dese con esta rama. Se puedes ejecutar algunas pruebas locales o fusionar otras ramas en esta rama. Cuando se este listo, se puede subir la rama nueva:
+```shell
+git push origin <BRANCH_NAME>
+```
+
+**Nota:** Mas informacion [aquí](https://docs.github.com/es/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/checking-out-pull-requests-locally).
 
 
 ## Estrategias de Merge (Git Merge vs Rebase vs Squash)
