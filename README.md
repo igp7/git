@@ -112,6 +112,16 @@ Local > Global > Sistema
   $ git config --global core.quotepath off
   ```
 
+- **Nombre de la rama principal:** Establecer el nombre de la rama inicial cuando se crea el repositorio.
+  ```sh
+  $ git config --global init.defaultBranch [name-rama]
+  ```
+  o atraves del fichero de configuración `~/.gitconfig`:
+  ```
+  [init]
+  defaultBranch = [name-rama]
+  ```
+
 ### Conexión SSH
 #### Github
 ##### Generar una nueva clave SSH
@@ -432,9 +442,14 @@ Una rama Git es simplemente un apuntador móvil apuntando a una de las confirmac
   $ git branch -d [name-rama]
   ```
 
-- **Eliminar ramas de forma forzosa:** cuando la rama que estás borrando cumple alguna de las siguientes condiciones, si los commits de esa rama no están fusionados con la rama 'master' o si los commits en esa rama no son empujados a un repositorio remoto. Git no te permitirá borrar esa rama con la opcion -d.
+- **Eliminar ramas de forma forzosa:** Cuando la rama que estás borrando cumple alguna de las siguientes condiciones, si los commits de esa rama no están fusionados con la rama 'master' o si los commits en esa rama no son empujados a un repositorio remoto. Git no te permitirá borrar esa rama con la opcion -d.
   ```sh
   $ git branch -D [name-rama]
+  ```
+
+- **Renombrar una rama:** Renombrar una rama existente.
+  ```sh
+  $ git branch -M [name-rama]
   ```
 
 - **Recuperar una rama borrada:** Cuando eliminas una rama, Git muestra el SHA1 de esa rama. Haciendo uso de ese SH1 se puede restaurar la rama borrada.
