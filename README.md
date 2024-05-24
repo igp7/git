@@ -104,8 +104,6 @@ Local > Global > Sistema
   $ git config --global color.ui auto
   ```
 
-**Nota:** Mas información sobre configuración de git [aquí](https://www.git-scm.com/book/es/v2/Personalizaci%C3%B3n-de-Git-Configuraci%C3%B3n-de-Git).
-
 - **Visualizacion de caracteres "inusuales":** Para que git muestre correctamente caracteres que considera "inusuales", por ejemplo la ñ.
   ```sh
   # Activar para todos los repositorios
@@ -121,6 +119,8 @@ Local > Global > Sistema
   [init]
   defaultBranch = [name-rama]
   ```
+
+**Nota:** Mas información sobre configuración de git [aquí](https://www.git-scm.com/book/es/v2/Personalizaci%C3%B3n-de-Git-Configuraci%C3%B3n-de-Git).
 
 ### Conexión SSH
 #### Github
